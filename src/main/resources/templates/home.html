@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ОкаТех - Магазин электротехники</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<nav>
+    <a href="#">Главная</a>
+    <a href="#">Каталог</a>
+    <a href="#">Контакты</a>
+</nav>
+
+<main>
+    <h2>Добро пожаловать в наш магазин!</h2>
+    <img th:src="@{/images/logo.png}" alt="Логотип магазина">
+    <p>Мы предлагаем лучшие товары по доступным ценам!</p>
+
+    <h3>Наши категории товаров:</h3>
+    <ul class="no-markers">
+        <li>Телевизоры</li>
+        <li>Холодильники</li>
+        <li>Стиральные машины</li>
+        <li>Микроволновые печи</li>
+        <li>Кофеварки</li>
+    </ul>
+</main>
+
+<footer>
+    <p>&copy; 2024 "ОкаТех" Магазин электротехники. Все права защищены.</p>
+</footer>
+
+</body>
+</html>
