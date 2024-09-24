@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ОкаТех - Магазин электротехники - Каталог товаров</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<nav>
+    <a th:href="@{/}">Главная</a>
+    <a th:href="@{/catalog}">Каталог</a>
+    <a href="#">Контакты</a>
+</nav>
+
+<catalog>
+    <h2>Каталог товаров</h2>
+
+    <form action="#" th:action="@{/catalog}" method="get">
+        <label for="category">Выберите категорию:</label>
+        <select id="category" name="category">
+            <option value="">Все категории</option>
+            <option th:each="category : ${categories}" th:value="${category.name}" th:text="${category.name}" th:selected="${category.name == selectedCategory}"></option>
+        </select>
+        <button type="submit">Фильтр</button>
+    </form>
+
+    <ul class="catalog-products">
+        <li th:each="product : ${products}" class="catalog-item">
+            <img th:src="@{${product.imageUrl}}" alt="Изображение товара" width="150" height="150"/>
+            <p th:text="${product.name}">Название товара</p>
+            <p th:text="${product.description}">Описание товара</p>
+            <p th:text="${product.price}">Цена</p>
+            <form th:action="@{/order}" method="get">
+                <input type="hidden" th:value="${product.id}" name="productId"/>
+                <button type="submit">Заказать</button>
+            </form>
+        </li>
+    </ul>
+</catalog>
+
+
+<footer>
+    <p>&copy; 2024 "ОкаТех" Магазин электротехники. Все права защищены.</p>
+</footer>
+
+</body>
+
+
+</html>

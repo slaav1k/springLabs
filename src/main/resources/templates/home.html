@@ -10,8 +10,8 @@
 <body>
 
 <nav>
-    <a href="#">Главная</a>
-    <a href="#">Каталог</a>
+    <a th:href="@{/}">Главная</a>
+    <a th:href="@{/catalog}">Каталог</a>
     <a href="#">Контакты</a>
 </nav>
 
@@ -22,11 +22,11 @@
 
     <h3>Наши категории товаров:</h3>
     <ul class="no-markers">
-        <li>Телевизоры</li>
-        <li>Холодильники</li>
+        <li> <a th:href="@{/catalog?category=TV}">Телевизоры</a></li>
+        <li> <a th:href="@{/catalog?category=FRIG}">Холодильники</a></li>
         <li>Стиральные машины</li>
-        <li>Микроволновые печи</li>
-        <li>Кофеварки</li>
+        <li> <a th:href="@{/catalog?category=Bake}">Микроволновые печи</a></li>
+        <li> <a th:href="@{/catalog?category=CoffeeMakers}">Кофеварки</a></li>
     </ul>
 </main>
 
