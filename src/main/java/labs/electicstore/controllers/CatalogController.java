@@ -5,10 +5,7 @@ import labs.electicstore.entities.Product;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,17 +19,17 @@ public class CatalogController {
 
     @GetMapping()
     public String catalog(@RequestParam(required = false) String category, Model model) {
-        // Заглушка для списка товаров и категорий
         List<Product> products = getProductsByCategory(category);
         List<Category> categories = getAllCategories();
 
         model.addAttribute("products", products);
-        model.addAttribute("categories", categories);
+//        model.addAttribute("categories", categories);
         model.addAttribute("selectedCategory", category);
 
         return "catalog";
     }
 
+    @ModelAttribute(name = "categories")
     private List<Category> getAllCategories() {
         List<Category> categories = Arrays.asList(
                 new Category(1, "TV"),
@@ -45,10 +42,10 @@ public class CatalogController {
 
     private List<Product> getProductsByCategory(String categoryName) {
         List<Product> allProducts = Arrays.asList(
-                new Product(1, "Samsung TV", "42-inch Smart TV", 500.0, new Category(1, "TV"), "images/tv1.jpg"),
-                new Product(2, "LG Fridge", "Energy efficient fridge", 600.0, new Category(2, "FRIG"), "images/fridge1.jpg"),
-                new Product(3, "Bosch Oven", "Multi-function oven", 300.0, new Category(3, "Bake"), "images/bake1.jpg"),
-                new Product(4, "De'Longhi Coffee Maker", "Automatic coffee machine", 200.0, new Category(4, "CoffeeMakers"), "images/coffeeMakers1.jpg")
+                new Product(1, "Samsung TV", "42-inch Smart TV", 500.0, new Category(1, "TV"), "/images/tv1.jpg"),
+                new Product(2, "LG Fridge", "Energy efficient fridge", 600.0, new Category(2, "FRIG"), "/images/fridge1.jpg"),
+                new Product(3, "Bosch Oven", "Multi-function oven", 300.0, new Category(3, "Bake"), "/images/bake1.jpg"),
+                new Product(4, "De'Longhi Coffee Maker", "Automatic coffee machine", 200.0, new Category(4, "CoffeeMakers"), "/images/coffeeMakers1.jpg")
         );
 
         if (categoryName == null || categoryName.isEmpty()) {

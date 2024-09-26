@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ОкаТех - Подтверждение заказа</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<header>
+    <h1>ОкаТех - Подтверждение заказа</h1>
+</header>
+
+<nav>
+    <a th:href="@{/}">Главная</a>
+    <a th:href="@{/catalog}">Каталог</a>
+    <a href="#">Контакты</a>
+</nav>
+
+<main>
+    <h2>Ваш заказ оформлен!</h2>
+
+    <h3>Детали заказа:</h3>
+    <ul class="no-markers">
+        <!-- Информация о заказанном продукте -->
+        <li><strong>Название товара:</strong> <span th:text="${product.name}">Название товара</span></li>
+        <li><strong>Цена:</strong> <span th:text="${product.price}">0.0</span></li>
+        <li><strong>Количество:</strong> <span th:text="${order.quantity}">0</span></li>
+        <li><strong>Общая стоимость:</strong> <span th:text="${product.price * order.quantity}">0.0</span></li>
+
+        <!-- Информация о клиенте -->
+        <li><strong>Ваше ФИО:</strong> <span th:text="${order.customerName}">Имя Фамилия</span></li>
+        <li><strong>Адрес доставки:</strong> <span th:text="${order.address}">Адрес доставки</span></li>
+    </ul>
+
+    <!-- Изображение товара -->
+    <p>
+        <img th:src="@{${product.imageUrl}}" alt="Изображение товара" width="150" height="150"/>
+    </p>
+
+    <p th:text="'Спасибо за ваш заказ! Мы свяжемся с вами в ближайшее время по вашей эл. почте: ' + ${order.email} + '.'"></p>
+
+</main>
+
+<footer>
+    <p>&copy; 2024 "ОкаТех" Магазин электротехники. Все права защищены.</p>
+</footer>
+
+</body>
+</html>
