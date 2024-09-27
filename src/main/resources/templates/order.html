@@ -12,7 +12,7 @@
 <nav>
     <a th:href="@{/}">Главная</a>
     <a th:href="@{/catalog}">Каталог</a>
-    <a href="#">Контакты</a>
+    <a th:href="@{/contacts}">Контакты</a>
 </nav>
 
 
@@ -20,47 +20,40 @@
     <h2>Оформление заказа на: <span th:text="${selectedProduct.name}"></span></h2>
     <p><img th:src="@{${selectedProduct.imageUrl}}" alt="Изображение товара" width="150" height="150"/> </p>
 
-    <!-- Форма заказа -->
     <form method="POST" th:object="${productOrder}">
         <input type="hidden" th:field="*{productId}" th:value="${selectedProduct.id}">
 
-        <!-- Поле для имени покупателя -->
         <div class="form-group">
             <label for="customerName">Ваше ФИО:</label>
             <input type="text" th:field="*{customerName}" id="customerName">
         </div>
 
-        <!-- Ошибки валидации для имени -->
         <div class="validationError" th:if="${#fields.hasErrors('customerName')}" th:errors="*{customerName}"></div>
 
-        <!-- Поле для почты -->
+
         <div class="form-group">
             <label for="email">Эл. почта:</label>
             <input type="text" th:field="*{email}" id="email">
         </div>
 
-        <!-- Ошибки валидации для почты -->
         <div class="validationError" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
 
-        <!-- Поле для адреса доставки -->
+
         <div class="form-group">
             <label for="address">Адрес доставки:</label>
             <textarea th:field="*{address}" id="address" rows="4"></textarea>
         </div>
 
-        <!-- Ошибки валидации для адреса -->
         <div class="validationError" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
 
-        <!-- Поле для количества -->
         <div class="form-group">
             <label for="quantity">Количество:</label>
             <input type="number" th:field="*{quantity}" id="quantity" min="1" th:value="1" required>
         </div>
 
-        <!-- Ошибки валидации для количества -->
         <div class="validationError" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></div>
 
-        <!-- Кнопка отправки -->
+
         <div style="text-align: center; margin-top: 20px;">
             <button type="submit">Оформить заказ</button>
         </div>

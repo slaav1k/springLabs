@@ -118,3 +118,10 @@ catalog {
     padding: 5px;
 }
 
+.map-container {
+    display: flex;
+    justify-content: center; /* Центрирование по горизонтали */
+    margin: 20px 0; /* Дополнительные отступы сверху и снизу */
+}
+
+

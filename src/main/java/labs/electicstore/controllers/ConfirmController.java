@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Slf4j
 @Controller
-@RequestMapping("/confirm")
+@RequestMapping("/orders")
 @SessionAttributes({"productOrder", "selectedProduct"})
 public class ConfirmController {
 
-    @GetMapping()
+    @GetMapping("/confirm")
     public String showConfirmationPage(@ModelAttribute("productOrder") Order productOrder,
                                        @ModelAttribute("selectedProduct") Product selectedProduct,
                                        Model model) {
