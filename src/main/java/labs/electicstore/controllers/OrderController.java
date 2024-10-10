@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import labs.electicstore.entities.Category;
 import labs.electicstore.entities.Order;
 import labs.electicstore.entities.Product;
+import labs.electicstore.repositories.CategoryRepository;
+import labs.electicstore.repositories.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,12 @@ import java.util.List;
 @RequestMapping("/order")
 @SessionAttributes({"productOrder", "selectedProduct"})
 public class OrderController {
+
+    private final ProductRepository productRepo;
+
+    public OrderController(ProductRepository productRepo) {
+        this.productRepo = productRepo;
+    }
 
     @GetMapping()
     public String showOrderForm(@RequestParam(value = "productId", required = false) Integer productId, Model model) {
@@ -104,11 +112,12 @@ public class OrderController {
 //                new Product(3, "Bosch Oven", "Multi-function oven", 300.0, new Category(3, "Bake"), "/images/bake1.jpg"),
 //                new Product(4, "De'Longhi Coffee Maker", "Automatic coffee machine", 200.0, new Category(4, "CoffeeMakers"), "/images/coffeeMakers1.jpg")
 //        );
+        List<Product> allProducts = productRepo.findAll();
 
-//        return allProducts.stream()
-//                .filter(product -> product.getId() == productId)
-//                .findFirst()
-//                .orElse(null);
-        return null;
+        return allProducts.stream()
+                .filter(product -> product.getId() == productId)
+                .findFirst()
+                .orElse(null);
+//        return null;
     }
 }
