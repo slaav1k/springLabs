@@ -22,6 +22,7 @@ public class ConfirmController {
                                        Model model) {
         model.addAttribute("order", productOrder);
         model.addAttribute("product", selectedProduct);
+//        model.addAttribute("customer", productOrder.getCustomer());
         return "orderConfirmation"; // Здесь будет ваше представление для подтверждения
     }
 }

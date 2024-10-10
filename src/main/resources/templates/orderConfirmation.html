@@ -29,8 +29,8 @@
         <li><strong>Общая стоимость:</strong> <span th:text="${product.price * order.quantity}">0.0</span></li>
 
 
-        <li><strong>Ваше ФИО:</strong> <span th:text="${order.customerName}">Имя Фамилия</span></li>
-        <li><strong>Адрес доставки:</strong> <span th:text="${order.address}">Адрес доставки</span></li>
+        <li><strong>Ваше ФИО:</strong> <span th:text="${order.customer.customerName}">Имя Фамилия</span></li>
+        <li><strong>Адрес доставки:</strong> <span th:text="${order.customer.address}">Адрес доставки</span></li>
     </ul>
 
 
@@ -38,7 +38,7 @@
         <img th:src="@{${product.imageUrl}}" alt="Изображение товара" width="150" height="150"/>
     </p>
 
-    <p th:text="'Спасибо за ваш заказ! Мы свяжемся с вами в ближайшее время по вашей эл. почте: ' + ${order.email} + '.'"></p>
+    <p th:text="'Спасибо за ваш заказ! Мы свяжемся с вами в ближайшее время по вашей эл. почте: ' + ${order.customer.email} + '.'"></p>
 
 </main>
 

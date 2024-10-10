@@ -1,29 +1,30 @@
 package labs.electicstore.entities;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Информация о заказе
  */
 @Data
+@NoArgsConstructor
+@Entity
+@Table(name = "\"order\"")
 public class Order {
 
-    private int productId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
-    @NotBlank(message = "Имя клиента не должно быть пустым")
-    @Size(min = 5, message = "Имя клиента должно содержать не менее 5 букв")
-    @Pattern(regexp = "^[a-zA-Zа-яА-ЯёЁ\\s]+$", message = "Имя клиента должно содержать только буквы")
-    private String customerName;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
-    @NotBlank(message = "Адрес эл. почты не должен быть пустым")
-    @Size(min = 10, message = "Адрес эл. почты должен содержать не менее 10 символов")
-    @Pattern(regexp = "^[\\w\\d._%+-]+@[\\w\\d.-]+\\.[a-zA-Z]{2,6}$", message = "Неверный формат адреса эл. почты")
-    private String email;
-
-    @NotBlank(message = "Адрес доставки не должен быть пустым")
-    @Size(min = 10, message = "Адрес доставки должен содержать не менее 10 символов")
-    private String address;
+    @ManyToOne()
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     @NotNull
     @Min(value = 1, message = "Количество должно быть не меньше 1")
@@ -35,10 +36,11 @@ public class Order {
         ISSUED, WAIT, DONE, CANCEL
     }
 
-    public Order(int productId) {
-        this.productId = productId;
-    }
 
-    public Order() {
+    public Order(Product product, Customer customer, Integer quantity) {
+        this.product = product;
+        this.customer = customer;
+        this.quantity = quantity;
+        this.status = StatusOrder.WAIT;
     }
 }
