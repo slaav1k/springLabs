@@ -124,4 +124,34 @@ catalog {
     margin: 20px 0; /* Дополнительные отступы сверху и снизу */
 }
 
+.form-group {
+    display: flex;
+    flex-direction: column; /* Размещает элементы (лейбл и поле ввода) вертикально */
+    margin-bottom: 5px; /* Добавляет отступ между полями ввода */
+}
+
+
+label {
+    font-weight: bold; /* Делает текст метки жирным */
+    margin-bottom: 5px; /* Добавляет отступ между лейблом и полем ввода */
+}
+
+input, textarea {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 30%; /* Поля ввода занимают 30% ширины */
+    box-sizing: border-box; /* Чтобы отступы и границы входили в ширину */
+    margin: 3px auto; /* Центрируем поля ввода */
+    display: block; /* Поля будут блочными, чтобы применился auto-margin */
+}
+
+.validationError {
+    color: red;
+    font-size: 12px;
+    margin-top: 1px;
+    margin-bottom: 5px;
+}
+
+
 

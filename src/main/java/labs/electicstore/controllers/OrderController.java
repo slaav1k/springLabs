@@ -1,6 +1,7 @@
 package labs.electicstore.controllers;
 
 import jakarta.validation.Valid;
+import jakarta.validation.Validator;
 import labs.electicstore.entities.Customer;
 import labs.electicstore.entities.Order;
 import labs.electicstore.entities.Product;
@@ -8,8 +9,10 @@ import labs.electicstore.repositories.CustomerRepository;
 import labs.electicstore.repositories.OrderRepository;
 import labs.electicstore.repositories.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -177,4 +180,7 @@ public class OrderController {
                 .orElse(null);
 //        return null;
     }
+
+
+
 }

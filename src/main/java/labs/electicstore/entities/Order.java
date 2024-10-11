@@ -1,6 +1,7 @@
 package labs.electicstore.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class Order {
 
     @ManyToOne()
     @JoinColumn(name = "customer_id")
+    @Valid
     private Customer customer;
 
     @NotNull
