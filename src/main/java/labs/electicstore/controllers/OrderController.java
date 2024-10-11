@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -88,11 +89,20 @@ public class OrderController {
             return "order";
         }
 
-        customerRepo.save(productOrder.getCustomer());
+//        customerRepo.save(productOrder.getCustomer());
+
+        Optional<Customer> existingCustomer = customerRepo.findByEmail(productOrder.getCustomer().getEmail());
+
+        if (existingCustomer.isPresent()) {
+            productOrder.setCustomer(existingCustomer.get());
+        } else {
+            customerRepo.save(productOrder.getCustomer());
+        }
+
 //
 //        productOrder.setCustomer(customer);
 
-
+        productOrder.setStatus(Order.StatusOrder.WAIT);
         orderRepo.save(productOrder);
 
         log.info("Order received: {}", productOrder);

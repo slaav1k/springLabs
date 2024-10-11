@@ -30,6 +30,7 @@ public class Order {
     @Min(value = 1, message = "Количество должно быть не меньше 1")
     private Integer quantity;
 
+    @Enumerated(EnumType.STRING)
     private StatusOrder status;
 
     public enum StatusOrder {
