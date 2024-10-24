@@ -1,11 +1,6 @@
 spring:
   application:
     name: ElectricStore
-  datasource:
-    url: jdbc:h2:mem:electicstore;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    driver-class-name: org.h2.Driver
-    username: admin
-    password:
-  h2:
-    console:
-      enabled: true
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/electricStore

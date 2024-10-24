@@ -48,7 +48,7 @@ public class CatalogController {
 //                new Category(4, "CoffeeMakers")
 //                );
 //        return categories;
-        return categoryRepo.findAll();
+        return (List<Category>) categoryRepo.findAll();
     }
 
     private List<Product> getProductsByCategory(String categoryName) {
@@ -59,7 +59,7 @@ public class CatalogController {
 //                new Product(4, "De'Longhi Coffee Maker", "Automatic coffee machine", 200.0, new Category(4, "CoffeeMakers"), "/images/coffeeMakers1.jpg")
 //        );
 
-        List<Product> allProducts = productRepo.findAll();
+        List<Product> allProducts = (List<Product>) productRepo.findAll();
 
         if (categoryName == null || categoryName.isEmpty()) {
             return allProducts;

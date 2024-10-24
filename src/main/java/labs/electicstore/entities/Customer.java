@@ -1,15 +1,16 @@
 package labs.electicstore.entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.UUID;
 
 
 /**
@@ -17,11 +18,11 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@Entity
+@Document(collation = "customer")
 public class Customer {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private String id;
 
     @NotBlank(message = "Имя клиента не должно быть пустым")
     @Size(min = 5, message = "Имя клиента должно содержать не менее 5 букв")
@@ -38,6 +39,7 @@ public class Customer {
     private String address;
 
     public Customer(String customerName, String email, String address) {
+        this.id = UUID.randomUUID().toString();
         this.customerName = customerName;
         this.email = email;
         this.address = address;

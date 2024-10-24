@@ -1,30 +1,29 @@
 package labs.electicstore.entities;
 
-import jakarta.persistence.*;
+
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.UUID;
 
 /**
  * Информация о заказе
  */
 @Data
 @NoArgsConstructor
-@Entity
-@Table(name = "\"order\"")
+@Document(collation = "\"order\"")
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private String id;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
+    @Valid
     private Product product;
 
-    @ManyToOne()
-    @JoinColumn(name = "customer_id")
     @Valid
     private Customer customer;
 
@@ -32,7 +31,6 @@ public class Order {
     @Min(value = 1, message = "Количество должно быть не меньше 1")
     private Integer quantity;
 
-    @Enumerated(EnumType.STRING)
     private StatusOrder status;
 
     public enum StatusOrder {
@@ -41,6 +39,7 @@ public class Order {
 
 
     public Order(Product product, Customer customer, Integer quantity) {
+        this.id = UUID.randomUUID().toString();
         this.product = product;
         this.customer = customer;
         this.quantity = quantity;

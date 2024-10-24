@@ -41,8 +41,7 @@ public class OrderController {
             return "redirect:/catalog";
         }
 
-//        Product product = getProductByID(productId);
-        Product product = productRepo.findById(productId).orElse(null);
+        Product product = productRepo.findById(String.valueOf(productId)).orElse(null);
         if (product == null) {
             return "redirect:/catalog";
         }
@@ -60,31 +59,10 @@ public class OrderController {
     }
 
 
-//    @PostMapping
-//    public String processOrder(
-//            @Valid @ModelAttribute("productOrder") Order productOrder,
-//            BindingResult result,
-//            @ModelAttribute("selectedProduct") Product selectedProduct,
-//            Model model) {
-//
-//        if (result.hasErrors()) {
-//            return "order";
-//        }
-//
-//        log.info("Order received: {}", productOrder);
-//
-//
-//        model.addAttribute("productOrder", productOrder);
-//        model.addAttribute("selectedProduct", selectedProduct);
-//
-//        return "redirect:/orders/confirm";
-//    }
-
     @PostMapping
     public String processOrder(
             @Valid @ModelAttribute("productOrder") Order productOrder,
             BindingResult result,
-//            @ModelAttribute("customer") Customer customer,
             @ModelAttribute("selectedProduct") Product selectedProduct,
             Model model) {
 
@@ -92,7 +70,6 @@ public class OrderController {
             return "order";
         }
 
-//        customerRepo.save(productOrder.getCustomer());
 
         Optional<Customer> existingCustomer = customerRepo.findByEmail(productOrder.getCustomer().getEmail());
 
@@ -102,14 +79,11 @@ public class OrderController {
             customerRepo.save(productOrder.getCustomer());
         }
 
-//
-//        productOrder.setCustomer(customer);
 
         productOrder.setStatus(Order.StatusOrder.WAIT);
         orderRepo.save(productOrder);
 
         log.info("Order received: {}", productOrder);
-//        log.info("Customer created: {}", customer);
 
         model.addAttribute("productOrder", productOrder);
         model.addAttribute("selectedProduct", selectedProduct);
@@ -117,39 +91,6 @@ public class OrderController {
         return "redirect:/orders/confirm";
     }
 
-
-
-//    @GetMapping("/confirmation")
-//    public String showConfirmationPage(@ModelAttribute("productOrder") Order productOrder,
-//                                       @ModelAttribute("selectedProduct") Product selectedProduct,
-//                                       Model model) {
-//        model.addAttribute("order", productOrder);
-//        model.addAttribute("product", selectedProduct);
-//        return "orderConfirmation";
-//    }
-
-//    @GetMapping("/confirmation")
-//    public String showConfirmationPage() {
-//        return "orderConfirmation";
-//    }
-
-
-
-//    @GetMapping("/confirmation")
-//    public String showConfirmationPage(@RequestParam(value = "productId") Integer productId,
-//                                       Model model) {
-////        Product product = getProductByID(productId);
-//        Product product = productRepo.findById(productId).orElse(null);
-//        if (product == null) {
-//            return "redirect:/catalog"; // Перенаправляем, если продукт не найден
-//        }
-//
-//        // Извлекаем данные из сессии
-//        Order productOrder = (Order) model.getAttribute("productOrder");
-//        model.addAttribute("order", productOrder);
-//        model.addAttribute("product", product);
-//        return "orderConfirmation";
-//    }
 
 
     @GetMapping("/confirmation")
@@ -164,22 +105,6 @@ public class OrderController {
     }
 
 
-    @ModelAttribute(name = "product")
-    private Product getProductByID(int productId) {
-//        List<Product> allProducts = Arrays.asList(
-//                new Product(1, "Samsung TV", "42-inch Smart TV", 500.0, new Category(1, "TV"), "/images/tv1.jpg"),
-//                new Product(2, "LG Fridge", "Energy efficient fridge", 600.0, new Category(2, "FRIG"), "/images/fridge1.jpg"),
-//                new Product(3, "Bosch Oven", "Multi-function oven", 300.0, new Category(3, "Bake"), "/images/bake1.jpg"),
-//                new Product(4, "De'Longhi Coffee Maker", "Automatic coffee machine", 200.0, new Category(4, "CoffeeMakers"), "/images/coffeeMakers1.jpg")
-//        );
-        List<Product> allProducts = productRepo.findAll();
-
-        return allProducts.stream()
-                .filter(product -> product.getId() == productId)
-                .findFirst()
-                .orElse(null);
-//        return null;
-    }
 
 
 
