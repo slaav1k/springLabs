@@ -16,7 +16,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor()
-@Document(collation = "category")
+@Document(collection = "category")
 public class Category {
     @Id
     private String id;

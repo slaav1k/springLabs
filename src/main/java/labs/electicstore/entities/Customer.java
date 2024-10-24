@@ -18,7 +18,7 @@ import java.util.UUID;
  */
 @Data
 @NoArgsConstructor
-@Document(collation = "customer")
+@Document(collection = "customer")
 public class Customer {
 
     @Id

@@ -3,4 +3,8 @@ spring:
     name: ElectricStore
   data:
     mongodb:
-      uri: mongodb://localhost:27017/electricStore
+      host: localhost
+      port: 27017
+#      username: sl
+#      password: 123
+      database: electricStore

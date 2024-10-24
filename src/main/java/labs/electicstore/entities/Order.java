@@ -15,7 +15,7 @@ import java.util.UUID;
  */
 @Data
 @NoArgsConstructor
-@Document(collation = "\"order\"")
+@Document(collection = "\"order\"")
 public class Order {
 
     @Id

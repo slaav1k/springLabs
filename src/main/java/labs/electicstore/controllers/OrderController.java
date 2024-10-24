@@ -36,12 +36,12 @@ public class OrderController {
     }
 
     @GetMapping()
-    public String showOrderForm(@RequestParam(value = "productId", required = false) Integer productId, Model model) {
+    public String showOrderForm(@RequestParam(value = "productId", required = false) String productId, Model model) {
         if (productId == null) {
             return "redirect:/catalog";
         }
 
-        Product product = productRepo.findById(String.valueOf(productId)).orElse(null);
+        Product product = productRepo.findById(productId).orElse(null);
         if (product == null) {
             return "redirect:/catalog";
         }

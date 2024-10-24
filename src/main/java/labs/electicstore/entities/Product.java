@@ -16,7 +16,7 @@ import java.util.UUID;
  */
 @Data
 @NoArgsConstructor
-@Document(collation = "product")
+@Document(collection = "product")
 public class Product {
     @Id
     private String id;
