@@ -10,9 +10,11 @@
     <h1>ОкаТех - Оформление заказа</h1>
 </header>
 <nav>
-    <a th:href="@{/}">Главная</a>
-    <a th:href="@{/catalog}">Каталог</a>
-    <a th:href="@{/contacts}">Контакты</a>
+    <div class="nav-links" style="margin-left: 0; padding: 5px">
+        <a th:href="@{/}">Главная</a>
+        <a th:href="@{/catalog}">Каталог</a>
+        <a th:href="@{/contacts}">Контакты</a>
+    </div>
 </nav>
 
 
@@ -21,6 +23,7 @@
     <p><img th:src="@{${selectedProduct.imageUrl}}" alt="Изображение товара" width="150" height="150"/> </p>
 
     <form method="POST" th:object="${productOrder}">
+        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/> <!-- CSRF Token -->
         <input type="hidden" th:field="*{product.id}" th:value="${selectedProduct.id}">
 
         <div class="form-group">
@@ -53,10 +56,11 @@
 
         <div class="validationError" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></div>
 
-
-        <div style="text-align: center; margin-top: 20px;">
-            <button type="submit">Оформить заказ</button>
+        <div style="text-align: center; margin-top: 20px; margin-bottom: 20px">
+            <button type="submit" class="btn">Оформить заказ</button>
         </div>
+
+
     </form>
 </main>
 

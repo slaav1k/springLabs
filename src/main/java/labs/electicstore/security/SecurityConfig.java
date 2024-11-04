@@ -24,16 +24,17 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        UserDetailsService UserRepositoryUserDetailsService = null;
         return http
                 .authorizeRequests(authorize -> authorize
-                        .requestMatchers("/home", "/catalog",
-                                "/contact").authenticated() /*.hasRole("USER")*/
-                        .requestMatchers("/", "/**").permitAll()
+//                        .requestMatchers("/order").authenticated()
+                        .requestMatchers("/order/**").authenticated()
+                        .requestMatchers("/orders/confirm").authenticated()
+                        .requestMatchers("/catalog", "/contact","/", "/**").permitAll()
                 )
                 .formLogin(login -> login
                         .loginPage("/login")
-                        .defaultSuccessUrl("/home")
+                        .defaultSuccessUrl("/")
+                        .failureUrl("/login?error")
                         .permitAll()
                 )
                 .logout(logout -> logout

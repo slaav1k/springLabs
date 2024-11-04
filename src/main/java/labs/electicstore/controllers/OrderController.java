@@ -5,11 +5,15 @@ import jakarta.validation.Validator;
 import labs.electicstore.entities.Customer;
 import labs.electicstore.entities.Order;
 import labs.electicstore.entities.Product;
+import labs.electicstore.entities.User;
 import labs.electicstore.repositories.CustomerRepository;
 import labs.electicstore.repositories.OrderRepository;
 import labs.electicstore.repositories.ProductRepository;
+import labs.electicstore.repositories.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -28,15 +32,23 @@ public class OrderController {
     private final ProductRepository productRepo;
     private final OrderRepository orderRepo;
     private final CustomerRepository customerRepo;
+    private final UserRepository userRepo;
 
-    public OrderController(ProductRepository productRepo, OrderRepository orderRepo, CustomerRepository customerRepo) {
+    public OrderController(ProductRepository productRepo, OrderRepository orderRepo, CustomerRepository customerRepo, UserRepository userRepo) {
         this.productRepo = productRepo;
         this.orderRepo = orderRepo;
         this.customerRepo = customerRepo;
+        this.userRepo = userRepo;
     }
 
     @GetMapping()
-    public String showOrderForm(@RequestParam(value = "productId", required = false) Integer productId, Model model) {
+    public String showOrderForm(@RequestParam(value = "productId", required = false) Integer productId,
+                                Model model,
+                                @AuthenticationPrincipal UserDetails userDetails ) {
+        if (userDetails == null) {
+            return "redirect:/login";
+        }
+
         if (productId == null) {
             return "redirect:/catalog";
         }
@@ -50,9 +62,24 @@ public class OrderController {
         Order productOrder = new Order();
         productOrder.setProduct(product);
         Customer customer = new Customer();
+
+        String username = userDetails.getUsername();
+        Optional<User> optionalUser = Optional.ofNullable(userRepo.findByUsername(username)); // Замените userRepo на ваш репозиторий
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            customer.setCustomerName(user.getUsername());
+            customer.setEmail(user.getEmail());
+            customer.setAddress(user.getAddress());
+        } else {
+            // Обработка случая, когда пользователь не найден в базе
+            return "redirect:/login";
+        }
+        productOrder.setCustomer(customer);
         model.addAttribute("selectedProduct", product);
         model.addAttribute("productOrder", productOrder);
         model.addAttribute("customer", customer);
+
         log.info("showOrderForm Order details: {}", productOrder);
         log.info("showOrderForm Product details: {}", product);
 
@@ -60,25 +87,6 @@ public class OrderController {
     }
 
 
-//    @PostMapping
-//    public String processOrder(
-//            @Valid @ModelAttribute("productOrder") Order productOrder,
-//            BindingResult result,
-//            @ModelAttribute("selectedProduct") Product selectedProduct,
-//            Model model) {
-//
-//        if (result.hasErrors()) {
-//            return "order";
-//        }
-//
-//        log.info("Order received: {}", productOrder);
-//
-//
-//        model.addAttribute("productOrder", productOrder);
-//        model.addAttribute("selectedProduct", selectedProduct);
-//
-//        return "redirect:/orders/confirm";
-//    }
 
     @PostMapping
     public String processOrder(
@@ -119,39 +127,6 @@ public class OrderController {
 
 
 
-//    @GetMapping("/confirmation")
-//    public String showConfirmationPage(@ModelAttribute("productOrder") Order productOrder,
-//                                       @ModelAttribute("selectedProduct") Product selectedProduct,
-//                                       Model model) {
-//        model.addAttribute("order", productOrder);
-//        model.addAttribute("product", selectedProduct);
-//        return "orderConfirmation";
-//    }
-
-//    @GetMapping("/confirmation")
-//    public String showConfirmationPage() {
-//        return "orderConfirmation";
-//    }
-
-
-
-//    @GetMapping("/confirmation")
-//    public String showConfirmationPage(@RequestParam(value = "productId") Integer productId,
-//                                       Model model) {
-////        Product product = getProductByID(productId);
-//        Product product = productRepo.findById(productId).orElse(null);
-//        if (product == null) {
-//            return "redirect:/catalog"; // Перенаправляем, если продукт не найден
-//        }
-//
-//        // Извлекаем данные из сессии
-//        Order productOrder = (Order) model.getAttribute("productOrder");
-//        model.addAttribute("order", productOrder);
-//        model.addAttribute("product", product);
-//        return "orderConfirmation";
-//    }
-
-
     @GetMapping("/confirmation")
     public String showConfirmationPage(Model model) {
         Order productOrder = (Order) model.getAttribute("productOrder");
@@ -166,19 +141,13 @@ public class OrderController {
 
     @ModelAttribute(name = "product")
     private Product getProductByID(int productId) {
-//        List<Product> allProducts = Arrays.asList(
-//                new Product(1, "Samsung TV", "42-inch Smart TV", 500.0, new Category(1, "TV"), "/images/tv1.jpg"),
-//                new Product(2, "LG Fridge", "Energy efficient fridge", 600.0, new Category(2, "FRIG"), "/images/fridge1.jpg"),
-//                new Product(3, "Bosch Oven", "Multi-function oven", 300.0, new Category(3, "Bake"), "/images/bake1.jpg"),
-//                new Product(4, "De'Longhi Coffee Maker", "Automatic coffee machine", 200.0, new Category(4, "CoffeeMakers"), "/images/coffeeMakers1.jpg")
-//        );
+
         List<Product> allProducts = productRepo.findAll();
 
         return allProducts.stream()
                 .filter(product -> product.getId() == productId)
                 .findFirst()
                 .orElse(null);
-//        return null;
     }
 
 

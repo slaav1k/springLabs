@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,10 +14,30 @@
 </header>
 
 <nav>
-    <a th:href="@{/}">Главная</a>
-    <a th:href="@{/catalog}">Каталог</a>
-    <a th:href="@{/contacts}">Контакты</a>
+    <div class="nav-links">
+        <a th:href="@{/}">Главная</a>
+        <a th:href="@{/catalog}">Каталог</a>
+        <a th:href="@{/contacts}">Контакты</a>
+    </div>
+
+    <div class="nav-buttons">
+        <span sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-danger">Выход</button>
+            </form>
+        </span>
+        <span sec:authorize="isAnonymous()">
+            <form th:action="@{/login}" method="get" style="display:inline;">
+                <button type="submit" class="btn btn-success">Вход</button>
+            </form>
+        </span>
+    </div>
 </nav>
+
+
+
+
+
 
 <main>
     <h2>Добро пожаловать в наш магазин!</h2>
