@@ -1,4 +1,5 @@
 spring:
+
   application:
     name: ElectricStore
   datasource:
@@ -9,3 +10,9 @@ spring:
   h2:
     console:
       enabled: true
+
+admin:
+  username: rootSl
+  password: 1234
+  email: root@ya.ru
+  address: Галактика дальняя

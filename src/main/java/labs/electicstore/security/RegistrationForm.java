@@ -1,9 +1,13 @@
 package labs.electicstore.security;
 
 import jakarta.validation.constraints.*;
+import labs.electicstore.entities.Role;
 import labs.electicstore.entities.User;
 import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 public class RegistrationForm {
@@ -32,10 +36,15 @@ public class RegistrationForm {
         return password != null && password.equals(confirm);
     }
 
-    public User toUser(PasswordEncoder passwordEncoder) {
-        return new User(0,
-                username, passwordEncoder.encode(password),
-                email, address
+    public User toUser(PasswordEncoder passwordEncoder, Role userRole) {
+        Set<Role> roles = new HashSet<>();
+        roles.add(userRole);
+        return new User(
+                username,
+                passwordEncoder.encode(password),
+                email,
+                address,
+                roles
         );
     }
 }

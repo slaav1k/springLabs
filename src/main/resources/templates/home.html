@@ -52,6 +52,18 @@
         <li> <a th:href="@{/catalog?category=Bake}">Микроволновые печи</a></li>
         <li> <a th:href="@{/catalog?category=CoffeeMakers}">Кофеварки</a></li>
     </ul>
+
+
+
+
+    <p sec:authorize="hasAuthority('ROLE_ADMIN')">
+        Текущий пользователь: <span sec:authentication="name"></span><br>
+        Роли пользователя: <span sec:authentication="principal.authorities"></span>
+    </p>
+
+    <span sec:authorize="hasAuthority('ROLE_ADMIN')">Админ крутой!</span>
+
+
 </main>
 
 <footer>

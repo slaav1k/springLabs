@@ -2,6 +2,8 @@ package labs.electicstore.controllers;
 
 
 import jakarta.validation.Valid;
+import labs.electicstore.entities.Role;
+import labs.electicstore.repositories.RoleRepository;
 import labs.electicstore.repositories.UserRepository;
 import labs.electicstore.security.RegistrationForm;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,10 +20,12 @@ public class RegistrationController {
 
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
+    private RoleRepository roleRepository;
 
-    public RegistrationController(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public RegistrationController(UserRepository userRepository, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     @GetMapping
@@ -49,10 +53,10 @@ public class RegistrationController {
             return "registration"; // Возвращаем на страницу регистрации с ошибками
         }
 
-
+        Role userRole = roleRepository.findByName("ROLE_USER");
 
         userRepository.save(
-                form.toUser(passwordEncoder)
+                form.toUser(passwordEncoder, userRole)
         );
         return "redirect:/login";
     }
