@@ -10,6 +10,12 @@ spring:
   h2:
     console:
       enabled: true
+  data:
+      rest:
+        base-path: /data-api
+
+
+
 
 admin:
   username: rootSl
