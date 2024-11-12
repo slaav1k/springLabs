@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ОкаТех - Магазин электротехники</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header>
+    <h1>ОкаТех - Выгодная цена</h1>
+</header>
+
+<nav>
+    <div class="nav-links">
+        <a th:href="@{/}">Главная</a>
+        <a th:href="@{/catalog}">Каталог</a>
+        <a th:href="@{/contacts}">Контакты</a>
+    </div>
+
+    <div class="nav-buttons">
+        <span sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-danger">Выход</button>
+            </form>
+        </span>
+        <span sec:authorize="isAnonymous()">
+            <form th:action="@{/login}" method="get" style="display:inline;">
+                <button type="submit" class="btn btn-success">Вход</button>
+            </form>
+        </span>
+    </div>
+</nav>
+
+
+
+
+
+
+<main>
+    <h2>Добро пожаловать в наш магазин!</h2>
+    <img th:src="@{/images/logo.png}" alt="Логотип магазина">
+    <p>Мы предлагаем лучшие товары по доступным ценам!</p>
+
+    <h3>Наши категории товаров:</h3>
+    <ul class="no-markers">
+        <li> <a th:href="@{/catalog?category=TV}">Телевизоры</a></li>
+        <li> <a th:href="@{/catalog?category=FRIG}">Холодильники</a></li>
+        <li>Стиральные машины</li>
+        <li> <a th:href="@{/catalog?category=Bake}">Микроволновые печи</a></li>
+        <li> <a th:href="@{/catalog?category=CoffeeMakers}">Кофеварки</a></li>
+    </ul>
+
+
+
+
+    <p sec:authorize="hasAuthority('ROLE_ADMIN')">
+        Текущий пользователь: <span sec:authentication="name"></span><br>
+        Роли пользователя: <span sec:authentication="principal.authorities"></span>
+    </p>
+
+    <span sec:authorize="hasAuthority('ROLE_ADMIN')">Админ крутой!</span>
+
+
+</main>
+
+<footer>
+    <p>&copy; 2024 "ОкаТех" Магазин электротехники. Все права защищены.</p>
+</footer>
+
+</body>
+</html>

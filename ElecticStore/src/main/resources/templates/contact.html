@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ОкаТех - Магазин электротехники - Контакты</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+
+<header>
+    <h1>ОкаТех - Контактная информация</h1>
+</header>
+
+<nav>
+    <div class="nav-links">
+        <a th:href="@{/}">Главная</a>
+        <a th:href="@{/catalog}">Каталог</a>
+        <a th:href="@{/contacts}">Контакты</a>
+    </div>
+
+    <div class="nav-buttons">
+        <span sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-danger">Выход</button>
+            </form>
+        </span>
+        <span sec:authorize="isAnonymous()">
+            <form th:action="@{/login}" method="get" style="display:inline;">
+                <button type="submit" class="btn btn-success">Вход</button>
+            </form>
+        </span>
+    </div>
+</nav>
+
+<main>
+
+    <h3>Контакты:</h3>
+    <ul class="no-markers">
+        <li><strong>Телефон 1:</strong> <span>+7(910)908-14-11</span></li>
+        <li><strong>Телефон 2:</strong> <span>+7(915)906-29-99</span></li>
+        <li><strong>Адресс:</strong> <span>г. Рязань, ул. Каширина, д. 7</span></li>
+        <li><strong>Режим работы:</strong> <span>9.00 - 22.00</span></li>
+    </ul>
+
+
+    <div class="map-container">
+        <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A8c870ab1ee9405de9cd7cb9d46fea0f7b0e7496e5218541db0874917f89fbcf0&amp;width=400&amp;height=300&amp;lang=ru_RU&amp;scroll=true"></script>    </div>
+
+
+
+</main>
+
+<footer>
+    <p>&copy; 2024 "ОкаТех" Магазин электротехники. Все права защищены.</p>
+</footer>
+
+</body>
+</html>
