@@ -64,10 +64,11 @@ public class OrderController {
         Customer customer = new Customer();
 
         String username = userDetails.getUsername();
-        Optional<User> optionalUser = Optional.ofNullable(userRepo.findByUsername(username)); // Замените userRepo на ваш репозиторий
+        Optional<User> optionalUser = userRepo.findByUsername(username);
 
         if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
+            User user = optionalUser.orElseThrow(() -> new RuntimeException("User not found"));
+
             customer.setCustomerName(user.getUsername());
             customer.setEmail(user.getEmail());
             customer.setAddress(user.getAddress());
