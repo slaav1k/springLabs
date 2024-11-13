@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ОкаТех - Магазин электротехники - Регистрация</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header>
+    <h1>ОкаТех - Регистрация</h1>
+</header>
+
+<nav>
+    <div class="nav-links" style="margin-left: 0; padding: 5px">
+        <a th:href="@{/}">Главная</a>
+        <a th:href="@{/catalog}">Каталог</a>
+        <a th:href="@{/contacts}">Контакты</a>
+    </div>
+</nav>
+
+<main>
+
+    <form method="POST" th:action="@{/register}" th:object="${registrationForm}" id="registerForm">
+        <div class="form-group">
+            <label for="username">Ваш никнейм: </label>
+            <input type="text" th:field="*{username}"/><br/>
+        </div>
+        <div class="validationError" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+
+        <div class="form-group">
+            <label for="password">Пароль: </label>
+            <input type="password" th:field="*{password}"/><br/>
+        </div>
+        <div class="validationError" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+
+        <div class="form-group">
+            <label for="confirm">Подтвердите пароль: </label>
+            <input type="password" th:field="*{confirm}"/><br/>
+        </div>
+        <div class="validationError" th:if="${#fields.hasErrors('confirm')}" th:errors="*{confirm}"></div>
+
+        <div class="form-group">
+            <label for="email">Email: </label>
+            <input type="text" th:field="*{email}"/><br/>
+        </div>
+        <div class="validationError" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+
+        <div class="form-group">
+            <label for="address">Адресс доставки: </label>
+            <input type="text" th:field="*{address}"/><br/>
+        </div>
+        <div class="validationError" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
+
+        <div style="text-align: center; margin-top: 20px; margin-bottom: 20px">
+            <button type="submit" class="btn">Зарегистрироваться</button>
+        </div>
+
+
+    </form>
+
+</main>
+
+<footer>
+    <p>&copy; 2024 "ОкаТех" Магазин электротехники. Все права защищены.</p>
+</footer>
+
+</body>
+</html>

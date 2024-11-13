@@ -1,0 +1,27 @@
+server:
+  port: 9090
+
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          electicstore-admin-client:
+            provider: ElecticStore
+            client-id: electicstore-admin-client
+            client-secret: secret
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://127.0.0.1:9090/login/oauth2/code/{registrationId}"
+            scope: writeCategories,deleteCategories,openid
+
+        provider:
+          ElecticStore:
+            issuer-uri: http://127.0.0.1:9000
+
+#logging:
+#  level:
+#    root: DEBUG
+#  file:
+#    name: logs/app2.log
+

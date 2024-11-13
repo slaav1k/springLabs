@@ -1,0 +1,28 @@
+spring:
+
+  application:
+    name: ElectricStore
+  datasource:
+    url: jdbc:h2:mem:electicstore;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: admin
+    password:
+  h2:
+    console:
+      enabled: true
+  data:
+      rest:
+        base-path: /data-api
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:9000/oauth2/jwks
+
+
+
+admin:
+  username: rootSl
+  password: 1234
+  email: root@ya.ru
+  address: Галактика дальняя

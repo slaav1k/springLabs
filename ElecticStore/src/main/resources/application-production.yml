@@ -1,0 +1,29 @@
+spring:
+  profiles:
+    activate:
+      on-profile: production
+  application:
+    name: ElectricStore
+  datasource:
+    url: jdbc:h2:file:./data/electricstore_prod;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: prod_admin
+    password: prod_password
+  h2:
+    console:
+      enabled: false
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+admin:
+  username: rootSl
+  password: 1234
+  email: root@ya.ru
+  address: Галактика дальняя
+
+logging:
+  level:
+    root: error
+    org.springframework.web: error
+    org.hibernate: error

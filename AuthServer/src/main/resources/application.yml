@@ -1,0 +1,23 @@
+#spring:
+#
+#  application:
+#    name: AuthServer
+#server:
+#  port: 9090
+
+
+server:
+  port: 9000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+
+#logging:
+#  level:
+#    root: DEBUG
+#  file:
+#    name: logs/app1.log  # Путь к файлу для записи логов

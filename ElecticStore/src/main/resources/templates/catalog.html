@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ОкаТех - Магазин электротехники - Каталог товаров</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<header>
+    <h1>ОкаТех - Большой выбор</h1>
+</header>
+
+<nav>
+    <div class="nav-links">
+        <a th:href="@{/}">Главная</a>
+        <a th:href="@{/catalog}">Каталог</a>
+        <a th:href="@{/contacts}">Контакты</a>
+    </div>
+
+    <div class="nav-buttons">
+        <span sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-danger">Выход</button>
+            </form>
+        </span>
+        <span sec:authorize="isAnonymous()">
+            <form th:action="@{/login}" method="get" style="display:inline;">
+                <button type="submit" class="btn btn-success">Вход</button>
+            </form>
+        </span>
+    </div>
+</nav>
+
+<catalog>
+    <h2>Каталог товаров</h2>
+
+    <form action="#" th:action="@{/catalog}" method="get">
+        <label for="category">Выберите категорию:</label>
+        <select id="category" name="category">
+            <option value="">Все категории</option>
+            <option th:each="category : ${categories}" th:value="${category.name}" th:text="${category.name}" th:selected="${category.name == selectedCategory}"></option>
+        </select>
+        <button type="submit">Фильтр</button>
+    </form>
+
+    <ul class="catalog-products">
+        <li th:each="product : ${products}" class="catalog-item">
+            <img th:src="@{${product.imageUrl}}" alt="Изображение товара" width="150" height="150"/>
+            <p th:text="${product.name}">Название товара</p>
+            <p th:text="${product.description}">Описание товара</p>
+            <p th:text="${product.price}">Цена</p>
+            <form th:action="@{/order}" method="get">
+                <input type="hidden" th:value="${product.id}" name="productId"/>
+                <button type="submit">Заказать</button>
+            </form>
+        </li>
+    </ul>
+</catalog>
+
+
+<footer>
+    <p>&copy; 2024 "ОкаТех" Магазин электротехники. Все права защищены.</p>
+</footer>
+
+</body>
+
+
+</html>
