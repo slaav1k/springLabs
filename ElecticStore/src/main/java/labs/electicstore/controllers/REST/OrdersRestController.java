@@ -62,6 +62,12 @@ public class OrdersRestController {
     }
 
 
+    @GetMapping("/categories")
+    public Iterable<Category> getCategories() {
+        return categoryRepository.findAll();
+    }
+
+
     @PostMapping(path = "/category", consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public Category postCategory(@RequestBody Category category) {

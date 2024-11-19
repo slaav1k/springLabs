@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,17 +29,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
-                .authorizeRequests(authorize -> authorize
+                .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.OPTIONS).permitAll()
-                        .requestMatchers(HttpMethod.POST, "/data-api/categories")
-                            .hasAuthority("SCOPE_writeCategories")
-                        .requestMatchers(HttpMethod.DELETE, "/data-api/categories")
-                            .hasAuthority("SCOPE_deleteCategories")
+                        .requestMatchers("/api/categories").authenticated()
+//                        .requestMatchers(HttpMethod.POST, "/data-api/categories")
+//                            .hasAuthority("SCOPE_writeCategories")
+//                        .requestMatchers(HttpMethod.DELETE, "/data-api/categories")
+//                            .hasAuthority("SCOPE_deleteCategories")
                         .requestMatchers("/order/**").authenticated()
                         .requestMatchers("/orders/confirm").authenticated()
                         .requestMatchers("/catalog", "/contact","/", "/**").permitAll()
                 )
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt())
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
                 .formLogin(login -> login
                         .loginPage("/login")
                         .defaultSuccessUrl("/")

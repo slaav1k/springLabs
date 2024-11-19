@@ -1,24 +1,21 @@
-server:
-  port: 9090
-
-
 spring:
+  application:
+    name: ElicStore-admin
   security:
     oauth2:
       client:
         registration:
-          electicstore-admin-client:
-            provider: ElecticStore
-            client-id: electicstore-admin-client
-            client-secret: secret
-            authorization-grant-type: authorization_code
-            redirect-uri: "http://127.0.0.1:9090/login/oauth2/code/{registrationId}"
-            scope: writeCategories,deleteCategories,openid
-
+          admin-client:
+            provider: admin-provider
+            client-id: admin-client-3732d774
+            client-secret: secret-dc9abad3
+            authorization-grant-type: client_credentials
+            scope: read
         provider:
-          ElecticStore:
-            issuer-uri: http://127.0.0.1:9000
-
+          admin-provider:
+            token-uri: http://localhost:9000/oauth2/token
+server:
+  port: 8082
 #logging:
 #  level:
 #    root: DEBUG
