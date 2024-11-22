@@ -1,8 +1,7 @@
 package servs.authserver;
 
 
-import labs.electicstore.entities.*;
-import labs.electicstore.repositories.*;
+
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
